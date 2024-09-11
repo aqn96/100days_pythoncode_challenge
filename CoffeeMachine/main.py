@@ -43,9 +43,19 @@ def enough_supply(drink):
     water = resources["water"]
     milk = resources["milk"]
     coffee = resources["coffee"]
+    if drink != "espresso":
+        if water < MENU[drink]["ingredients"]["water"]:
+            print("Sorry there is not enough water")
+        elif milk < MENU[drink]["ingredients"]["milk"]:
+            print("Sorry there is not enough milk")
+        elif coffee < MENU[drink]["ingredients"]["coffee"]:
+            print("Sorry there is not coffee")
 
-    if water < MENU[drink]["ingredients"]["water"]:
-        print("Sorry there is not enough water")
+    if drink == "espresso":
+        if water < MENU[drink]["ingredients"]["water"]:
+            print("Sorry there is not enough water")
+        elif coffee < MENU[drink]["ingredients"]["coffee"]:
+            print("Sorry there is not coffee")
 
 def process_coin():
 
