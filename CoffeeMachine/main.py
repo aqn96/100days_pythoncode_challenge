@@ -27,59 +27,123 @@ MENU = {
 }
 
 resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
+    "water": 1500,
+    "milk": 1250,
+    "coffee": 500,
 }
 
 print(logo)
 
 active_state = True
+water = resources["water"]
+milk = resources["milk"]
+coffee = resources["coffee"]
 total_money = 0.0
 
 def print_report():
+    global water, milk, coffee
     for x in resources:
         if x == 'water':
-            print(f"{x.title()}: {resources[x]}ml")
+            print(f"{x.title()}: {water}ml")
         if x == 'milk':
-            print(f"{x.title()}: {resources[x]}ml")
+            print(f"{x.title()}: {milk}ml")
         if x == 'coffee':
-            print(f"{x.title()}: {resources[x]}g")
+            print(f"{x.title()}: {coffee}g")
     print(f"Money: ${total_money}")
 
 def enough_supply(drink):
-    water = resources["water"]
-    milk = resources["milk"]
-    coffee = resources["coffee"]
+    global water, milk, coffee
     if drink != "espresso":
         if water < MENU[drink]["ingredients"]["water"]:
             print("Sorry there is not enough water")
+            return False
         elif milk < MENU[drink]["ingredients"]["milk"]:
             print("Sorry there is not enough milk")
+            return False
         elif coffee < MENU[drink]["ingredients"]["coffee"]:
             print("Sorry there is not coffee")
+            return False
 
     if drink == 'espresso':
         if water < MENU[drink]["ingredients"]["water"]:
             print("Sorry there is not enough water")
+            return False
         elif coffee < MENU[drink]["ingredients"]["coffee"]:
             print("Sorry there is not coffee")
+            return False
+    return True
 
-def process_coin(drink, money_insert):
+def process_coin(quart, dimes, nickels, pennies):
+    return .25*quart + .10*dimes + .05*nickels + .01*pennies
+
+def check_transaction(drink, money_insert):
     global total_money
+    if money_insert < MENU[drink]["cost"]:
+        print("Sorry that's not enough money. Money refunded...")
+        return False
     total_money += money_insert
     if money_insert > MENU[drink]["cost"]:
         change = money_insert - MENU[drink]["cost"]
         total_money -= change
         print(f"Here is ${change} dollars in change.")
+        return True
+    return True
 
-#def check_transaction():
+def make_coffee(drink):
+    global milk, water, coffee
+    if drink != 'espresso':
+        waterD = MENU[drink]['ingredients']['water']
+        milkD = MENU[drink]['ingredients']['milk']
+        coffeeD = MENU[drink]['ingredients']['coffee']
+        water -= waterD
+        milk -= milkD
+        coffee -= coffeeD
+    if drink == 'espresso':
+        waterD = MENU[drink]['ingredients']['water']
+        coffeeD =  MENU[drink]['ingredients']['coffee']
+        water -= waterD
+        coffee -= coffeeD
 
 
+def coffee_machine():
+    action = input("What would you like customer? (espresso/latte/cappuccino)\n")
+    if action == 'off':
+        print("You found the secret code! The machine is shutting down now")
+        global active_state
+        active_state = False
+        return None
+    elif action == 'report':
+        print_report()
+        coffee_machine()
+    elif action != 'espresso' and action != 'latte' and action != 'cappuccino':
+        print("Not a valid command sir/madame. Please enter a valid command.")
+        coffee_machine()
+    else:
+        ready = enough_supply(action)
+        if ready:
+            all_coins = input("Please enter the amount of money in format (quarter dime nickels pennies):")
+            if all_coins == 'off':
+                print("You found the secret code! The machine is shutting down now")
+                active_state = False
+                return None
+            while all_coins == 'report':
+                print_report()
+                all_coins = input("Please enter the amount of money in format (quarter dime nickels pennies):")
+            try:
+                lstCoin = all_coins.split()
+                quart = lstCoin[0]
+                dime = lstCoin[1]
+                nick = lstCoin[2]
+                penn = lstCoin[3]
+                moneyIn = process_coin(int(quart),int(dime),int(nick),int(penn))
+                approve = check_transaction(action, moneyIn)
+                if approve:
+                    make_coffee(action)
+                    print(f"Here is your {action}. Enjoy!")
+            except IndexError:
+                print("ERROR: Invalid input please try again.")
+                print("Machine starting from beginning again")
+                coffee_machine()
 
-
-#coffee = input("What would you like customer? (espresso/latte/cappuccino)\n")
-
-print_report()
-enough_supply('espresso')
-process_coin('espresso', 100)
+while active_state:
+    coffee_machine()
