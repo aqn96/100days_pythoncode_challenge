@@ -91,13 +91,13 @@ def process_coin(quart, dimes, nickels, pennies):
 def check_transaction(drink, money_insert):
     global total_money
     if money_insert < MENU[drink]["cost"]:
-        print("Sorry that's not enough money. Money refunded...")
+        print("\nSorry that's not enough money. Money refunded...")
         return False
     total_money += money_insert
     if money_insert > MENU[drink]["cost"]:
         change = money_insert - MENU[drink]["cost"]
         total_money -= change
-        print(f"Here is ${change} dollars in change.")
+        print(f"\nHere is ${round(change,2)} dollars in change.")
         return True
     return True
 
@@ -118,7 +118,7 @@ def make_coffee(drink):
 
 
 def coffee_machine():
-    action = input("What would you like customer? (espresso/latte/cappuccino)\n")
+    action = input("\nWhat would you like customer? (espresso/latte/cappuccino)\n")
     if action == 'off':
         print("You found the secret code! The machine is shutting down now")
         global active_state
@@ -128,19 +128,19 @@ def coffee_machine():
         print_report()
         coffee_machine()
     elif action != 'espresso' and action != 'latte' and action != 'cappuccino':
-        print("Not a valid command sir/madame. Please enter a valid command.")
+        print("\nNot a valid command sir/madame. Please enter a valid command.")
         coffee_machine()
     else:
         ready = enough_supply(action)
         if ready:
-            all_coins = input("Please enter the amount of money in format (quarter dime nickels pennies):")
+            all_coins = input("\nPlease enter the amount of money in format (quarter dime nickels pennies):")
             if all_coins == 'off':
                 print("You found the secret code! The machine is shutting down now")
                 active_state = False
                 return None
             while all_coins == 'report':
                 print_report()
-                all_coins = input("Please enter the amount of money in format (quarter dime nickels pennies):")
+                all_coins = input("\nPlease enter the amount of money in format (quarter dime nickels pennies):")
             try:
                 lstCoin = all_coins.split()
                 quart = lstCoin[0]
