@@ -35,9 +35,17 @@ resources = {
 print(logo)
 
 active_state = True
+total_money = 0.0
 
 def print_report():
-    print(resources)
+    for x in resources:
+        if x == 'water':
+            print(f"{x.title()}: {resources[x]}ml")
+        if x == 'milk':
+            print(f"{x.title()}: {resources[x]}ml")
+        if x == 'coffee':
+            print(f"{x.title()}: {resources[x]}g")
+    print(f"Money: ${total_money}")
 
 def enough_supply(drink):
     water = resources["water"]
@@ -51,17 +59,27 @@ def enough_supply(drink):
         elif coffee < MENU[drink]["ingredients"]["coffee"]:
             print("Sorry there is not coffee")
 
-    if drink == "espresso":
+    if drink == 'espresso':
         if water < MENU[drink]["ingredients"]["water"]:
             print("Sorry there is not enough water")
         elif coffee < MENU[drink]["ingredients"]["coffee"]:
             print("Sorry there is not coffee")
 
-def process_coin():
+def process_coin(drink, money_insert):
+    global total_money
+    total_money += money_insert
+    if money_insert > MENU[drink]["cost"]:
+        change = money_insert - MENU[drink]["cost"]
+        total_money -= change
+        print(f"Here is ${change} dollars in change.")
+
+#def check_transaction():
 
 
-def check_transaction():
 
 
+#coffee = input("What would you like customer? (espresso/latte/cappuccino)\n")
 
-    coffee = input("What would you like customer? (espresso/latte/cappuccino)\n")
+print_report()
+enough_supply('espresso')
+process_coin('espresso', 100)
