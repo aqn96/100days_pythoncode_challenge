@@ -1,11 +1,4 @@
-############### Blackjack Project #####################
-
-#Difficulty Normal 😎: Use all Hints below to complete the project.
-#Difficulty Hard 🤔: Use only Hints 1, 2, 3 to complete the project.
-#Difficulty Extra Hard 😭: Only use Hints 1 & 2 to complete the project.
-#Difficulty Expert 🤯: Only use Hint 1 to complete the project.
-
-############### Our Blackjack House Rules #####################
+############### Blackjack House Rules #####################
 
 ## The deck is unlimited in size. 
 ## There are no jokers. 
@@ -18,22 +11,11 @@
 
 ##################### Hints #####################
 
-#Hint 1: Go to this website and try out the Blackjack game: 
-#   https://games.washingtonpost.com/games/blackjack/
 #Then try out the completed Blackjack project here: 
 #   https://appbrewery.github.io/python-day11-demo/
 
-#Hint 2: Read this breakdown of program requirements: 
-#   http://listmoz.com/view/6h34DJpvJBFVRlZfJvxF
-#Then try to create your own flowchart for the program.
-
-#Hint 3: Download and read this flow chart I've created: 
-#   https://drive.google.com/uc?export=download&id=1rDkiHCrhaf9eX7u7yjM1qwSuyEk-rPnt
-
-#Hint 4: Create a deal_card() function that uses the List below to *return* a random card.
-#11 is the Ace.
 import random
-from replit import clear
+import os
 from art import logo
 
 def deal_card():
@@ -43,15 +25,13 @@ def deal_card():
   return card
 
 #Hint 6: Create a function called calculate_score() that takes a List of cards as input 
-#and returns the score. 
-#Look up the sum() function to help you do this.
+#and returns the score.
 def calculate_score(cards):
   """Take a list of cards and return the score calculated from the cards"""
 
-  #Hint 7: Inside calculate_score() check for a blackjack (a hand with only 2 cards: ace + 10) and return 0 instead of the actual score. 0 will represent a blackjack in our game.
   if sum(cards) == 21 and len(cards) == 2:
     return 0
-  #Hint 8: Inside calculate_score() check for an 11 (ace). If the score is already over 21, remove the 11 and replace it with a 1. You might need to look up append() and remove().
+
   if 11 in cards and sum(cards) > 21:
     cards.remove(11)
     cards.append(1)
@@ -122,5 +102,5 @@ def play_game():
 
 #Hint 14: Ask the user if they want to restart the game. If they answer yes, clear the console and start a new game of blackjack and show the logo from art.py.
 while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ") == "y":
-  clear()
+  os.system('cls')
   play_game()
