@@ -1,2 +1,2 @@
 # BlackJack game
-Code that simulate BlackJack game.
+Project that simulate BlackJack game.
