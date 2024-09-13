@@ -1,2 +1,2 @@
-# 100days_pythoncode_challenge
-Udemy focus course for python. Course teaches from beginner to expert python skills in the form of various projects. Each branch contains projects I did.
+# OOP Quiz Game
+A quiz game that build from scratch using object orientated programming. Also utilzes the open trivia database api here: https://opentdb.com/api_config.php to generate the questions.
