@@ -1,2 +1,2 @@
-# OOP Quiz Game
-A quiz game that build from scratch using object orientated programming. Also utilzes the open trivia database api here: https://opentdb.com/api_config.php to generate the questions.
+# Turtle Challenges
+Using python "turtle" module to complete a set of challenge tasks. OOP practice.
